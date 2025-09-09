@@ -24,7 +24,7 @@ const defaultColors = [
 
 // 转换配置为ECharts选项
 const getChartOptions = (): EChartsOption => {
-  const { title, subtitle, legend, tooltip, series, color } = props.config;
+  const { title, titleStyle, subtitle, subtitleStyle, legend, tooltip, series, color } = props.config;
 
   // 优先使用config中的color，否则使用默认颜色
   // 处理color可能是单个颜色或颜色数组的情况
@@ -41,6 +41,8 @@ const getChartOptions = (): EChartsOption => {
       subtext: subtitle,
       left: 'center',
       top: 0,
+      textStyle: titleStyle ? titleStyle : {color: 'black' },
+      subtextStyle: subtitleStyle ? subtitleStyle : {color: 'black' },
     } : undefined,
     legend: legend ? (typeof legend === 'object' ? legend : {
       show: true,

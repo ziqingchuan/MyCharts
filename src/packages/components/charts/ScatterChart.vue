@@ -85,7 +85,7 @@ const createCartesianCoordinate = () => ({
 
 // 转换配置为ECharts选项
 const getChartOptions = (): EChartsOption => {
-  const { title, subtitle, legend, tooltip, xAxis, yAxis, series, grid, color } = props.config;
+  const { title, titleStyle, subtitle, subtitleStyle, legend, tooltip, xAxis, yAxis, series, grid, color } = props.config;
   const { xAxis: defaultX, yAxis: defaultY } = createCartesianCoordinate();
 
   // 处理颜色配置
@@ -162,7 +162,6 @@ const getChartOptions = (): EChartsOption => {
         ...s.emphasis?.itemStyle
       },
       label: {
-        show: true,
         formatter: function(params: any) {
           return `(${params.value[0]}, ${params.value[1]})`;
         },
@@ -182,6 +181,8 @@ const getChartOptions = (): EChartsOption => {
       subtext: subtitle,
       left: 'center',
       top: 0,
+      textStyle: titleStyle ? titleStyle : {color: 'black' },
+      subtextStyle: subtitleStyle ? subtitleStyle : {color: 'black' },
     } : undefined,
     legend: legendConfig,
     tooltip: tooltipConfig,

@@ -10,6 +10,16 @@ export interface BaseComponentConfig {
 // 图表基础配置
 export interface BaseChartConfig extends BaseComponentConfig {
     title?: string;
+    titleStyle?: {
+        color?: string;
+        fontSize?: number;
+        fontWeight?: string;
+    };
+    subtitleStyle?: {
+        color?: string;
+        fontSize?: number;
+        fontWeight?: string;
+    };
     subtitle?: string;
     legend?: boolean | {
         position?: 'top' | 'bottom' | 'left' | 'right';
@@ -409,116 +419,6 @@ export interface ScatterChartConfig extends BaseChartConfig {
         };
         [key: string]: any;
     }>;
-    [key: string]: any;
-}
-
-
-/**
- * ======================================== 表格相关配置类型 ========================================
- */
-// 表格列配置
-export interface TableColumn {
-    prop: string;
-    label: string;
-    width?: string | number;
-    align?: 'left' | 'center' | 'right';
-    formatter?: (row: any, column: TableColumn, cellValue: any, index: number) => any;
-    [key: string]: any;
-}
-
-// 表格配置
-export interface TableConfig extends BaseComponentConfig {
-    data: any[];
-    columns: TableColumn[];
-    border?: boolean;
-    stripe?: boolean;
-    pagination?: boolean | {
-        pageSize?: number;
-        currentPage?: number;
-        total?: number;
-        [key: string]: any;
-    };
-    selection?: boolean;
-    [key: string]: any;
-}
-
-
-/**
- * ======================================== 地理图相关配置类型 ========================================
- */
-
-// 地理位置图标签配置
-export interface GeoLabelConfig {
-    show?: boolean;
-    color?: string;
-    fontSize?: number;
-    [key: string]: any;
-}
-
-// 地理位置图配置
-export interface GeoChartConfig extends BaseChartConfig {
-    color?: string | string[]; // 新增颜色配置，与其他图表保持一致
-    map?: string; // 地图类型，如 'china', 'world', 'beijing' 等
-    roam?: boolean; // 是否允许缩放和平移
-    label?: GeoLabelConfig; // 地图标签配置，直接放在顶层更易用
-
-    // 地图本身的配置
-    geo?: {
-        map?: string; // 可以覆盖顶层的map配置
-        roam?: boolean; // 可以覆盖顶层的roam配置
-        label?: GeoLabelConfig; // 可以覆盖顶层的label配置
-        zoom?: number; // 初始缩放比例
-        center?: [number, number]; // 初始中心点坐标
-        [key: string]: any;
-    };
-
-    // 系列数据，支持地图上的各种系列类型
-    series?: Array<
-        | {
-        type: 'scatter' | 'effectScatter';
-        coordinateSystem: 'geo';
-        name?: string;
-        symbol?: string;
-        symbolSize?: number | ((value: any) => number);
-        data: Array<{
-            name?: string;
-            value: [number, number, number]; // [经度, 纬度, 值]
-            itemStyle?: {
-                color?: string;
-                [key: string]: any;
-            };
-            [key: string]: any;
-        }>;
-        [key: string]: any;
-    }
-        | {
-        type: 'heatmap';
-        coordinateSystem: 'geo';
-        name?: string;
-        data: Array<{
-            name?: string;
-            value: [number, number, number]; // [经度, 纬度, 值]
-            [key: string]: any;
-        }>;
-        [key: string]: any;
-    }
-        | {
-        type: 'map'; // 新增map类型的系列，匹配组件实现
-        map?: string; // 可以指定使用的地图
-        name?: string;
-        data: Array<{
-            name?: string; // 地区名称
-            value?: number; // 该地区的值
-            itemStyle?: {
-                color?: string;
-                [key: string]: any;
-            };
-            [key: string]: any;
-        }>;
-        [key: string]: any;
-    }
-    >;
-
     [key: string]: any;
 }
 

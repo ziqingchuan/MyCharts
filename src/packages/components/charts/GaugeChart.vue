@@ -26,7 +26,7 @@ const initChart = () => {
 
 // 转换配置为ECharts选项
 const getChartOptions = (): EChartsOption => {
-  const { title, subtitle, tooltip, series, color, backgroundColor } = props.config;
+  const { title, titleStyle, subtitle, subtitleStyle, tooltip, series, color, backgroundColor } = props.config;
 
   // 处理系列配置
   const processedSeries = series.map(s => ({
@@ -43,7 +43,9 @@ const getChartOptions = (): EChartsOption => {
       text: title,
       subtext: subtitle,
       left: 'center',
-      top: 0
+      top: 0,
+      textStyle: titleStyle ? titleStyle : {color: 'black' },
+      subtextStyle: subtitleStyle ? subtitleStyle : {color: 'black' },
     } : undefined,
     tooltip: tooltip === true ? {
       show: true,

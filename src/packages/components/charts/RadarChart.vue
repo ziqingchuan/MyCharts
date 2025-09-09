@@ -24,7 +24,7 @@ const defaultColors = [
 
 // 转换配置为 ECharts 选项
 const getChartOptions = (): EChartsOption => {
-  const { title, subtitle, legend, radar, series, color } = props.config;
+  const { title, titleStyle, subtitle, subtitleStyle, legend, radar, series, color, tooltip } = props.config;
 
   // 处理颜色配置，支持单个颜色或颜色数组
   const chartColors = Array.isArray(color)
@@ -40,6 +40,8 @@ const getChartOptions = (): EChartsOption => {
       subtext: subtitle,
       left: 'center',
       top: 0,
+      textStyle: titleStyle ? titleStyle : {color: 'black' },
+      subtextStyle: subtitleStyle ? subtitleStyle : {color: 'black' },
     } : undefined,
     legend: legend ? {
       ...legend,
@@ -74,7 +76,31 @@ const getChartOptions = (): EChartsOption => {
       }
     })) : [],
     tooltip: {
-      trigger: 'item'
+      trigger: 'item',
+      // 自定义内容格式化
+      formatter: (params: any) => {
+        const { seriesName, value, indicator } = params;
+        const indicators = radar?.indicator || []; // 获取雷达图维度配置
+
+        // 构建HTML内容
+        let html = `<div style="font-weight: bold; margin-bottom: 5px;">${seriesName}</div>`;
+
+        // 遍历每个维度的值
+        value.forEach((v: number, i: number) => {
+          const dimName = indicators[i]?.name || `维度 ${i + 1}`;
+          html += `
+            <div style="display: flex; justify-content: space-between;">
+              <span>${dimName}:</span>
+              <span style="font-weight: bold; color: ${chartColors[params.seriesIndex % chartColors.length]}">
+                ${v}${indicators[i]?.unit || ''}
+              </span>
+            </div>
+          `;
+        });
+
+        return html;
+      },
+      ...tooltip // 允许外部配置覆盖
     },
     // 添加动画效果
     animation: true,

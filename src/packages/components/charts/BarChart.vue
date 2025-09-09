@@ -60,7 +60,7 @@ const bindChartEvents = () => {
 
 // 获取图表配置
 const getChartOptions = (): EChartsOption => {
-  const { title, subtitle, legend, tooltip, xAxis, yAxis, series, grid, color } = props.config;
+  const { title, titleStyle, subtitle, subtitleStyle, legend, tooltip, xAxis, yAxis, series, grid, color } = props.config;
 
   // 处理颜色
   const chartColors = Array.isArray(color) ? color : color ? [color] : defaultColors;
@@ -147,6 +147,8 @@ const getChartOptions = (): EChartsOption => {
       subtext: subtitle,
       left: 'center',
       top: 0,
+      textStyle: titleStyle ? titleStyle : {color: 'black' },
+      subtextStyle: subtitleStyle ? subtitleStyle : {color: 'black' },
     } : undefined,
     legend: legendConfig,
     tooltip: tooltipConfig,
