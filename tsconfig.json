@@ -1,0 +1,32 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ],
+  "compilerOptions": {
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "jsx": "preserve",
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "lib": ["ESNext", "DOM"],
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    // 路径别名配置（关键部分）
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@packages/*": ["src/packages/*"],
+      "@packages": ["src/packages/index.ts"],
+      "@types/*": ["src/packages/types/*"],
+      "@types": ["src/packages/types/index.ts"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+}
