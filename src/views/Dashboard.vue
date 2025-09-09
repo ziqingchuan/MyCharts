@@ -816,7 +816,6 @@ const handlePageChange = (currentPage: number, pageSize: number) => {
 .dashboard-container {
   padding: 20px;
 }
-
 .dashboard-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
