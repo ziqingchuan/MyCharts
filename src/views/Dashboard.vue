@@ -28,23 +28,9 @@
         <ScatterChart :config="scatterChartConfig" />
       </div>
 
-      <!-- 地理位置图示例 -->
-      <div class="dashboard-card">
-        <GeoChart :config="geoChartConfig" />
-      </div>
-
       <!-- 仪表盘示例 -->
       <div class="dashboard-card">
         <GaugeChart :config="modernGaugeConfig" />
-      </div>
-
-      <!-- 表格示例 -->
-      <div class="dashboard-card">
-        <Table
-            :config="tableConfig"
-            @selection-change="handleSelectionChange"
-            @page-change="handlePageChange"
-        />
       </div>
     </div>
   </div>
@@ -52,8 +38,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { LineChart, PieChart, GeoChart, BarChart, RadarChart, ScatterChart, GaugeChart, Table } from "@packages";
-import type { LineChartConfig, PieChartConfig, GeoChartConfig, BarChartConfig, RadarChartConfig, ScatterChartConfig, GaugeChartConfig, TableConfig } from '@types';
+import { LineChart, PieChart, BarChart, RadarChart, ScatterChart, GaugeChart } from "@packages";
+import type { LineChartConfig, PieChartConfig, BarChartConfig, RadarChartConfig, ScatterChartConfig, GaugeChartConfig } from '@types';
 
 // 折线图配置
 const lineChartConfig = ref<LineChartConfig>({
@@ -92,7 +78,7 @@ const lineChartConfig = ref<LineChartConfig>({
     borderWidth: 1,
     borderRadius: 6,
     padding: 10,
-    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)'
+    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.Index.vue)'
   },
 
   xAxis: {
@@ -246,7 +232,7 @@ const barChartConfig = ref<BarChartConfig>({
     axisPointer: {
       type: 'shadow',
       shadowStyle: {
-        color: 'rgba(0, 0, 0, 0.1)'
+        color: 'rgba(0, 0, 0, 0.Index.vue)'
       }
     },
     backgroundColor: 'rgba(255, 255, 255, 0.9)',
@@ -528,61 +514,6 @@ const scatterChartConfig = ref<ScatterChartConfig>({
     }
   ]
 });
-// 地理位置图配置
-const geoChartConfig = ref<GeoChartConfig>({
-  width: '100%',
-  height: '500px',
-  map: 'china',
-  roam: false,
-  title: {
-    text: '主要城市分布与数据',
-    left: 'center'
-  },
-  geo: {
-    zoom: 1.2,
-    label: {
-      show: false
-    },
-    itemStyle: {
-      areaColor: '#f5f5f5',
-      borderColor: '#ddd'
-    }
-  },
-  series: [{
-    type: 'effectScatter',
-    coordinateSystem: 'geo',
-    name: '城市数据',
-    symbol: 'circle',
-    symbolSize: (value: any) => {
-      // 根据数值动态调整大小
-      return Math.sqrt(value[2] / 5) + 5;
-    },
-    data: [
-      { name: '北京', value: [116.4074, 39.9042, 480] },
-      { name: '上海', value: [121.4737, 31.2304, 520] },
-      { name: '广州', value: [113.2644, 23.1291, 350] },
-      { name: '深圳', value: [114.0579, 22.5431, 380] },
-      { name: '杭州', value: [120.1551, 30.2741, 290] },
-      { name: '成都', value: [104.0665, 30.5723, 260] },
-      { name: '武汉', value: [114.3055, 30.5928, 220] },
-      { name: '重庆', value: [106.5504, 29.5637, 210] },
-      { name: '西安', value: [108.9540, 34.2652, 180] },
-      { name: '南京', value: [118.7969, 32.0603, 190] },
-      { name: '哈尔滨', value: [126.6379, 45.8038, 120] },
-      { name: '昆明', value: [102.7183, 25.0454, 100] }
-    ],
-    itemStyle: {
-      shadowBlur: 10,
-      shadowColor: 'rgba(0, 0, 0, 0.3)'
-    },
-    emphasis: {
-      scale: true
-    },
-    rippleEffect: {
-      brushType: 'stroke'
-    }
-  }]
-});
 // 仪表盘配置
 const modernGaugeConfig = ref<GaugeChartConfig>({
   id: 'task-gauge',
@@ -605,7 +536,7 @@ const modernGaugeConfig = ref<GaugeChartConfig>({
     borderWidth: 1,
     borderRadius: 8,
     padding: 12,
-    boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)'
+    boxShadow: '0 2px 10px rgba(0, 0, 0, 0.Index.vue)'
   },
 
   // 系列配置 - 修复双层仪表盘对齐问题
@@ -747,69 +678,7 @@ const modernGaugeConfig = ref<GaugeChartConfig>({
     }
   ]
 });
-// 表格配置
-const tableConfig = ref<TableConfig>({
-  data: [
-    { id: 1, name: '产品A', sales: 12500, growth: 12.5, status: 'active' },
-    { id: 2, name: '产品B', sales: 9800, growth: 8.3, status: 'active' },
-    { id: 3, name: '产品C', sales: 7650, growth: -2.1, status: 'inactive' },
-    { id: 4, name: '产品D', sales: 15200, growth: 18.7, status: 'active' },
-    { id: 5, name: '产品E', sales: 6320, growth: 5.2, status: 'active' },
-    { id: 6, name: '产品A', sales: 12500, growth: 12.5, status: 'active' },
-    { id: 7, name: '产品B', sales: 9800, growth: 8.3, status: 'active' },
-    { id: 8, name: '产品C', sales: 7650, growth: -2.1, status: 'inactive' },
-    { id: 9, name: '产品D', sales: 15200, growth: 18.7, status: 'active' },
-    { id: 10, name: '产品E', sales: 6320, growth: 5.2, status: 'active' },
-    { id: 11, name: '产品A', sales: 12500, growth: 12.5, status: 'active' },
-    { id: 12, name: '产品B', sales: 9800, growth: 8.3, status: 'active' },
-    { id: 13, name: '产品C', sales: 7650, growth: -2.1, status: 'inactive' },
-    { id: 14, name: '产品D', sales: 15200, growth: 18.7, status: 'active' },
-    { id: 15, name: '产品E', sales: 6320, growth: 5.2, status: 'active' }
-  ],
-  columns: [
-    { prop: 'id', label: 'ID', width: 80, align: 'center' },
-    { prop: 'name', label: '产品名称' },
-    { prop: 'sales', label: '销售额', formatter: (row: any) => `¥${row.sales.toLocaleString()}` },
-    {
-      prop: 'growth',
-      label: '增长率',
-      align: 'center',
-      formatter: (row: any) => {
-        const growth = row.growth;
-        return `<span style="color: ${growth >= 0 ? 'green' : 'red'}">${growth}%</span>`;
-      }
-    },
-    {
-      prop: 'status',
-      label: '状态',
-      align: 'center',
-      formatter: (row: any) => {
-        const status = row.status;
-        return status === 'active'
-            ? '<span style="background: rgba(14,248,100,0.59); color: #166534; padding: 2px 8px; border-radius: 4px; font-size: 12px;">活跃</span>'
-            : '<span style="background: rgba(254,202,202,0.6); color: #b91c1c; padding: 2px 8px; border-radius: 4px; font-size: 12px;">停用</span>';
-      }
-    }
-  ],
-  border: true,
-  stripe: true,
-  selection: true,
-  pagination: {
-    pageSize: 6,
-    currentPage: 1,
-    total: 15
-  }
-});
-// 表格事件处理
-const handleSelectionChange = (rows: any[]) => {
-  console.log('选中的行:', rows);
-};
-const handlePageChange = (currentPage: number, pageSize: number) => {
-  console.log('页码变更:', currentPage, pageSize);
-  // 本地静态数据：表格组件已自动处理，这里无需额外操作
-  // 如需同步表格配置中的currentPage（可选）：
-  tableConfig.value.pagination.currentPage = currentPage;
-};
+
 </script>
 
 <style scoped>
