@@ -14,7 +14,7 @@
 import { ref, onMounted, onUnmounted, watch, computed } from 'vue';
 import * as echarts from 'echarts';
 import type { ECharts, EChartsOption } from 'echarts';
-import type { BaseChartConfig } from '@/types';
+import type { BaseChartConfig } from '@types';
 
 const props = defineProps<{
   config: BaseChartConfig;

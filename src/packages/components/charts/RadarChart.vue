@@ -5,8 +5,7 @@
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue';
 import BaseChart from './BaseChart.vue';
-import type { RadarChartConfig } from '@/types';
-import type { EChartsOption } from 'echarts';
+import type { RadarChartConfig } from '@types';
 
 const props = defineProps<{
   config: RadarChartConfig;
@@ -23,7 +22,7 @@ const defaultColors = [
 ];
 
 // 转换配置为 ECharts 选项
-const getChartOptions = (): EChartsOption => {
+const getChartOptions = (): any => {
   const { title, titleStyle, subtitle, subtitleStyle, legend, radar, series, color, tooltip } = props.config;
 
   // 处理颜色配置，支持单个颜色或颜色数组
@@ -44,9 +43,9 @@ const getChartOptions = (): EChartsOption => {
       subtextStyle: subtitleStyle ? subtitleStyle : {color: 'black' },
     } : undefined,
     legend: legend ? {
-      ...legend,
-      data: series?.map((s) => s.name),
-      selected: series?.reduce((acc, s) => {
+      ...(legend && typeof legend === 'object' ? legend : {}), // 更安全的展开方式
+      data: series?.map((s: any) => s.name),
+      selected: series?.reduce((acc: any, s: any) => {
         acc[s.name] = true;
         return acc;
       }, {} as Record<string, boolean>),
@@ -55,7 +54,7 @@ const getChartOptions = (): EChartsOption => {
       shape: 'polygon',
       indicator: [],
     },
-    series: series ? series.map((s, index) => ({
+    series: series ? series.map((s: any, index: any) => ({
       ...s,
       type: 'radar',
       name: s.name,
@@ -77,30 +76,27 @@ const getChartOptions = (): EChartsOption => {
     })) : [],
     tooltip: {
       trigger: 'item',
-      // 自定义内容格式化
       formatter: (params: any) => {
-        const { seriesName, value, indicator } = params;
-        const indicators = radar?.indicator || []; // 获取雷达图维度配置
+        const { seriesName, value } = params;
+        const indicators = radar?.indicator || [];
 
-        // 构建HTML内容
         let html = `<div style="font-weight: bold; margin-bottom: 5px;">${seriesName}</div>`;
 
-        // 遍历每个维度的值
         value.forEach((v: number, i: number) => {
           const dimName = indicators[i]?.name || `维度 ${i + 1}`;
           html += `
-            <div style="display: flex; justify-content: space-between;">
-              <span>${dimName}:</span>
-              <span style="font-weight: bold; color: ${chartColors[params.seriesIndex % chartColors.length]}">
-                ${v}${indicators[i]?.unit || ''}
-              </span>
-            </div>
-          `;
+        <div style="display: flex; justify-content: space-between;">
+          <span>${dimName}:</span>
+          <span style="font-weight: bold; color: ${chartColors[params.seriesIndex % chartColors.length]}">
+            ${v}
+          </span>
+        </div>
+      `;
         });
 
         return html;
       },
-      ...tooltip // 允许外部配置覆盖
+      ...(tooltip && typeof tooltip === 'object' ? tooltip : {}) // 更安全的展开方式
     },
     // 添加动画效果
     animation: true,

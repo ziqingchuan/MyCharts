@@ -404,7 +404,7 @@ export const systemHealthConfig = ref<GaugeChartConfig>({
                 width: '60%',
                 lineHeight: 36,
                 borderRadius: 8,
-                offsetCenter: [0, '-5%'],
+                offsetCenter: ['0', '-5%'],
                 fontSize: 32,
                 fontWeight: 'bolder',
                 formatter: '{value}%',
@@ -425,13 +425,13 @@ export const bigDataAreaConfig = ref<LineChartConfig>({
     subtitleStyle: {
         color: sciFiColors.text
     },
-    subtitle: '最近1000个数据点',
+    subtitle: '最近100个数据点',
     height: '400px',
     color: [sciFiColors.primary, sciFiColors.accent],
     backgroundColor: sciFiColors.cardBg,
     textStyle: { color: sciFiColors.text },
     legend: {
-        show: true,
+        show: false,
         textStyle: { color: sciFiColors.text },
         top: 10,
         right: '5%'
@@ -459,7 +459,7 @@ export const bigDataAreaConfig = ref<LineChartConfig>({
             showMinLabel: true,
             showMaxLabel: true
         },
-        data: Array.from({length: 1000}, (_, i) => `P${i}`)
+        data: Array.from({length: 100}, (_, i) => `P${i}`)
     },
     yAxis: {
         type: 'value',
@@ -492,7 +492,7 @@ export const bigDataAreaConfig = ref<LineChartConfig>({
             lineStyle: {
                 width: 1
             },
-            data: Array.from({length: 1000}, () => Math.floor(Math.random() * 500) + 500)
+            data: Array.from({length: 100}, () => Math.floor(Math.random() * 500) + 300)
         },
         {
             name: '数据流B',
@@ -511,7 +511,7 @@ export const bigDataAreaConfig = ref<LineChartConfig>({
             lineStyle: {
                 width: 1
             },
-            data: Array.from({length: 1000}, () => Math.floor(Math.random() * 300) + 300)
+            data: Array.from({length: 100}, () => Math.floor(Math.random() * 300) + 100)
         }
     ],
     dataZoom: [

@@ -5,8 +5,8 @@
 <script setup lang="ts">
 import { ref, onMounted, watch, nextTick, onUnmounted } from 'vue';
 import * as echarts from 'echarts';
-import type { GaugeChartConfig } from '@/types';
-import type { EChartsOption, ECharts } from 'echarts';
+import type { GaugeChartConfig } from '@types';
+import type { ECharts } from 'echarts';
 
 // 仅保留必要属性
 const props = defineProps<{
@@ -14,7 +14,7 @@ const props = defineProps<{
 }>();
 
 // 核心状态
-const chartContainer = ref<HTMLDivElement>(null);
+const chartContainer = ref<HTMLDivElement>();
 let chartInstance: ECharts | null = null;
 
 // 初始化图表
@@ -25,11 +25,11 @@ const initChart = () => {
 };
 
 // 转换配置为ECharts选项
-const getChartOptions = (): EChartsOption => {
+const getChartOptions = (): any => {
   const { title, titleStyle, subtitle, subtitleStyle, tooltip, series, color, backgroundColor } = props.config;
 
   // 处理系列配置
-  const processedSeries = series.map(s => ({
+  const processedSeries = series.map((s: any) => ({
     type: 'gauge' as const,
     ...s,
     // 确保数据格式正确

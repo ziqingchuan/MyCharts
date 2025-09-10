@@ -630,7 +630,7 @@ const modernGaugeConfig = ref<GaugeChartConfig>({
         width: '60%',
         lineHeight: 40,
         borderRadius: 8,
-        offsetCenter: [0, '-8%'],
+        offsetCenter: ['0', '-8%'],
         fontSize: 40,
         fontWeight: 'bolder',
         formatter: '{value} %',

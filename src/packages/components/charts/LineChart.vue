@@ -5,14 +5,14 @@
 <script setup lang="ts">
 import { ref, onMounted, watch, nextTick } from 'vue';
 import * as echarts from 'echarts';
-import type { LineChartConfig } from '@/types';
-import type { EChartsOption, ECharts } from 'echarts';
+import type { LineChartConfig } from '@types';
+import type { ECharts } from 'echarts';
 
 const props = defineProps<{
   config: LineChartConfig;
 }>();
 
-const chartContainer = ref<HTMLDivElement>(null);
+const chartContainer = ref<HTMLDivElement>();
 let chartInstance: ECharts | null = null;
 const legendSelected = ref<Record<string, boolean>>({});
 
@@ -77,7 +77,7 @@ const createCartesianCoordinate = () => ({
 });
 
 // 转换配置为ECharts选项
-const getChartOptions = (): EChartsOption => {
+const getChartOptions = (): any => {
   const { title, titleStyle, subtitle, subtitleStyle, legend, tooltip, xAxis, yAxis, series, grid, color } = props.config;
   const { xAxis: defaultX, yAxis: defaultY } = createCartesianCoordinate();
 
@@ -90,7 +90,7 @@ const getChartOptions = (): EChartsOption => {
 
   // 初始化图例选中状态
   if (series && Object.keys(legendSelected.value).length === 0) {
-    series.forEach(s => {
+    series.forEach((s: any) => {
       legendSelected.value[s.name || `series-${series.indexOf(s)}`] = true;
     });
   }
@@ -100,12 +100,12 @@ const getChartOptions = (): EChartsOption => {
     show: true,
     position: 'top',
     left: 'center',
-    data: series?.map(s => s.name),
+    data: series?.map((s: any) => s.name),
     selected: legendSelected.value
   } : typeof legend === 'object' ? {
     show: true,
     ...legend,
-    data: legend.data || series?.map(s => s.name),
+    data: legend.data || series?.map((s: any) => s.name),
     selected: legendSelected.value
   } : {
     show: false
@@ -141,7 +141,7 @@ const getChartOptions = (): EChartsOption => {
   };
 
   // 处理系列数据 - 关键修复：明确绑定坐标系
-  const processedSeries = series ? series.map((s, index) => ({
+  const processedSeries = series ? series.map((s: any, index: any) => ({
     ...s,
     type: 'line' as const,
     coordinateSystem: 'cartesian2d', // 显式指定坐标系

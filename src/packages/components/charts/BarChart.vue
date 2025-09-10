@@ -5,14 +5,14 @@
 <script setup lang="ts">
 import { ref, onMounted, watch, nextTick } from 'vue';
 import * as echarts from 'echarts';
-import type { BarChartConfig } from '@/types';
-import type { EChartsOption, ECharts } from 'echarts';
+import type { BarChartConfig } from '@types';
+import type { ECharts } from 'echarts';
 
 const props = defineProps<{
   config: BarChartConfig;
 }>();
 
-const chartContainer = ref<HTMLDivElement>(null);
+const chartContainer = ref<HTMLDivElement>();
 let chartInstance: ECharts | null = null;
 const legendSelected = ref<Record<string, boolean>>({});
 
@@ -59,7 +59,7 @@ const bindChartEvents = () => {
 };
 
 // 获取图表配置
-const getChartOptions = (): EChartsOption => {
+const getChartOptions = (): any => {
   const { title, titleStyle, subtitle, subtitleStyle, legend, tooltip, xAxis, yAxis, series, grid, color } = props.config;
 
   // 处理颜色
@@ -67,7 +67,7 @@ const getChartOptions = (): EChartsOption => {
 
   // 初始化图例选中状态
   if (series && Object.keys(legendSelected.value).length === 0) {
-    series.forEach(s => {
+    series.forEach((s: any) => {
       legendSelected.value[s.name || `series-${series.indexOf(s)}`] = true;
     });
   }
@@ -98,12 +98,12 @@ const getChartOptions = (): EChartsOption => {
     show: true,
     position: 'top',
     left: 'center',
-    data: series?.map(s => s.name),
+    data: series?.map((s: any) => s.name),
     selected: legendSelected.value
   } : typeof legend === 'object' ? {
     show: true,
     ...legend,
-    data: legend.data || series?.map(s => s.name),
+    data: legend.data || series?.map((s: any) => s.name),
     selected: legendSelected.value
   } : {
     show: false
@@ -121,7 +121,7 @@ const getChartOptions = (): EChartsOption => {
   };
 
   // 系列配置
-  const processedSeries = series ? series.map((s, index) => ({
+  const processedSeries = series ? series.map((s: any, index: any) => ({
     ...s,
     type: 'bar' as const,
     // 强制绑定坐标系

@@ -9,7 +9,7 @@ export interface BaseComponentConfig {
 
 // 图表基础配置
 export interface BaseChartConfig extends BaseComponentConfig {
-    title?: string;
+    title?: any;
     titleStyle?: {
         color?: string;
         fontSize?: number;
@@ -34,6 +34,8 @@ export interface BaseChartConfig extends BaseComponentConfig {
         right?: string | number;
         bottom?: string | number;
         left?: string | number;
+        containLabel?: boolean;
+        backgroundColor?: string;
     };
 }
 
@@ -74,7 +76,7 @@ export interface LineMarkLine {
 
 // 折线图区域填充配置
 export interface LineAreaStyle {
-    color?: string | string[];
+    color?: any;
     opacity?: number;
     [key: string]: any;
 }
@@ -145,26 +147,6 @@ export interface LineChartConfig extends BaseChartConfig {
 /**
  * ======================================== 饼图相关配置类型 ========================================
  */
-// 图例配置类型
-export interface LegendConfig {
-    show?: boolean;
-    position?: 'top' | 'right' | 'bottom' | 'left' | [number, number];
-    top?: string | number;
-    right?: string | number;
-    bottom?: string | number;
-    left?: string | number;
-    itemWidth?: number;
-    itemHeight?: number;
-    itemGap?: number;
-    textStyle?: {
-        fontSize?: number;
-        color?: string;
-        [key: string]: any;
-    };
-    data?: string[];
-    selected?: Record<string, boolean>;
-    [key: string]: any;
-}
 
 // 提示框配置类型
 export interface TooltipConfig {
@@ -244,7 +226,6 @@ export interface PieSeriesConfig {
 // 完善后的饼图配置类型
 export interface PieChartConfig extends BaseChartConfig {
     color?: string | string[];
-    legend?: boolean | LegendConfig; // 支持布尔值快速开关或详细配置
     tooltip?: boolean | TooltipConfig; // 支持布尔值快速开关或详细配置
     series?: PieSeriesConfig[];
     [key: string]: any;
@@ -264,7 +245,7 @@ export interface BarChartConfig extends BaseChartConfig {
         axisTick?: {
             alignWithLabel?: boolean; // 刻度线是否与标签对齐
         };
-        boundaryGap?: boolean; // 是否留白间隙（柱状图一般为 true）
+        boundaryGap?: any; // 是否留白间隙（柱状图一般为 true）
         [key: string]: any;
     };
     yAxis?: {

@@ -5,8 +5,8 @@
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue';
 import BaseChart from './BaseChart.vue';
-import type { PieChartConfig } from '@/types';
-import type { EChartsOption } from 'echarts';
+import type { PieChartConfig } from '@types';
+
 
 const props = defineProps<{
   config: PieChartConfig;
@@ -23,7 +23,7 @@ const defaultColors = [
 ];
 
 // 转换配置为ECharts选项
-const getChartOptions = (): EChartsOption => {
+const getChartOptions = (): any => {
   const { title, titleStyle, subtitle, subtitleStyle, legend, tooltip, series, color } = props.config;
 
   // 优先使用config中的color，否则使用默认颜色
@@ -54,13 +54,13 @@ const getChartOptions = (): EChartsOption => {
       formatter: '{a} <br/>{b}: {c} ({d}%)'
     }) : { show: false },
     series: series ?
-        series.map(s => ({
+        series.map((s: any) => ({
           ...s,
           type: 'pie',
           // 确保使用统一的颜色配置
           itemStyle: {
             ...s.itemStyle,
-            color: function(params) {
+            color: function(params: any) {
               return chartColors[params.dataIndex % chartColors.length];
             }
           }
@@ -71,7 +71,7 @@ const getChartOptions = (): EChartsOption => {
           center: ['50%', '50%'],
           data: [],
           itemStyle: {
-            color: function(params) {
+            color: function(params: any) {
               return chartColors[params.dataIndex % chartColors.length];
             }
           }
