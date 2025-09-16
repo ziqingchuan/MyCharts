@@ -129,9 +129,11 @@
 
 .charts-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    /*grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));*/
     gap: 20px;
     margin-bottom: 30px;
+    grid-template-columns: repeat(3, 1fr); /* 3列，等分宽度 */
+    min-width: 900px; /* 3列 * 300px 基础宽度，可根据需求调整 */
 }
 
 .chart-container {
