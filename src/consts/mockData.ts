@@ -425,7 +425,7 @@ export const bigDataAreaConfig = ref<LineChartConfig>({
     subtitleStyle: {
         color: sciFiColors.text
     },
-    subtitle: '最近100个数据点',
+    subtitle: '最近200个数据点',
     height: '400px',
     color: [sciFiColors.primary, sciFiColors.accent],
     backgroundColor: sciFiColors.cardBg,
@@ -459,7 +459,7 @@ export const bigDataAreaConfig = ref<LineChartConfig>({
             showMinLabel: true,
             showMaxLabel: true
         },
-        data: Array.from({length: 100}, (_, i) => `P${i}`)
+        data: Array.from({length: 200}, (_, i) => `P${i}`)
     },
     yAxis: {
         type: 'value',
@@ -492,7 +492,7 @@ export const bigDataAreaConfig = ref<LineChartConfig>({
             lineStyle: {
                 width: 1
             },
-            data: Array.from({length: 100}, () => Math.floor(Math.random() * 500) + 300)
+            data: Array.from({length: 200}, () => Math.floor(Math.random() * 500) + 300)
         },
         {
             name: '数据流B',
@@ -511,7 +511,7 @@ export const bigDataAreaConfig = ref<LineChartConfig>({
             lineStyle: {
                 width: 1
             },
-            data: Array.from({length: 100}, () => Math.floor(Math.random() * 300) + 100)
+            data: Array.from({length: 200}, () => Math.floor(Math.random() * 300) + 100)
         }
     ],
     dataZoom: [
